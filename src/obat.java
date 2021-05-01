@@ -1,9 +1,12 @@
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -12,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class obat extends javax.swing.JFrame {
     
-    String [] judul = {"kode Identitas","Nama Obat","Nama Merek","Kategori","Harga Beli","Jumlah Barang","Harga Jual","Catatan"};
+    String [] judul = {"kode Identitas","Nama Obat","Nama Merek","Kategori","Harga Beli","Jumlah Barang","Harga Jual","Kadaluarsa","Catatan"};
     DefaultTableModel model = new DefaultTableModel(judul,0);
     
     public obat() {
@@ -51,6 +54,8 @@ public class obat extends javax.swing.JFrame {
         kolom_harga_jual = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        kolom_kadaluarsa = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         tombol_tambah = new javax.swing.JButton();
         tombol_edit = new javax.swing.JButton();
@@ -67,55 +72,55 @@ public class obat extends javax.swing.JFrame {
         table_obat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         table_obat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9"
             }
         ));
         table_obat.setGridColor(new java.awt.Color(255, 102, 102));
@@ -204,6 +209,10 @@ public class obat extends javax.swing.JFrame {
         jLabel12.setText("Rp");
         jLabel12.setToolTipText("");
 
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel13.setText("Kadaluarsa");
+        jLabel13.setToolTipText("");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -226,7 +235,9 @@ public class obat extends javax.swing.JFrame {
                     .addComponent(pilihan, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11)
+                    .addComponent(jLabel13)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(kolom_kadaluarsa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addComponent(kolom_harga_jual, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -281,6 +292,10 @@ public class obat extends javax.swing.JFrame {
                     .addComponent(kolom_harga_jual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(kolom_kadaluarsa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(kolom_catatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -403,12 +418,18 @@ public class obat extends javax.swing.JFrame {
     
     int hargaBeli = Integer.parseInt(kolom_harga_beli.getText());
     int jumlahBarang = Integer.parseInt(kolom_jumlah_barang.getText());
-    int hargaJual = Integer.parseInt(kolom_harga_jual.getText());   
+    int hargaJual = Integer.parseInt(kolom_harga_jual.getText());
+    
+    //merubah dari kolom kadaluarsa ke database
+    String tgl = "yyyy-MM-dd";
+    SimpleDateFormat fm = new SimpleDateFormat(tgl);
+    String tanggal = String.valueOf(fm.format(kolom_kadaluarsa.getDate()));
+    
     String catatan = kolom_catatan.getText();
     
     try {          
          Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
-         cn.createStatement().executeUpdate("INSERT INTO `obat` (`id`, `nama_obat`, `nama_merek`, `kategori`, `harga_beli`, `jumlah_barang`, `harga_jual`, `expire`, `catatan`) VALUES (NULL, '"+namaObat+"', '"+namaMerek+"', '"+kategori+"', '"+hargaBeli+"', '"+jumlahBarang+"', '"+hargaJual+"', '2021-04-28', '"+catatan+"')");           
+         cn.createStatement().executeUpdate("INSERT INTO `obat` (`id`, `nama_obat`, `nama_merek`, `kategori`, `harga_beli`, `jumlah_barang`, `harga_jual`, `expire`, `catatan`) VALUES (NULL, '"+namaObat+"', '"+namaMerek+"', '"+kategori+"', '"+hargaBeli+"', '"+jumlahBarang+"', '"+hargaJual+"', '"+tanggal+"', '"+catatan+"')");           
          bersihkan();
          tampilkan();
        } catch (SQLException ex) {
@@ -438,14 +459,18 @@ public class obat extends javax.swing.JFrame {
             int hargaBeli = Integer.parseInt(kolom_harga_beli.getText());
             int jumlahBarang = Integer.parseInt(kolom_jumlah_barang.getText());
             int hargaJual = Integer.parseInt(kolom_harga_jual.getText());
+            //merubah dari kolom kadaluarsa ke database
+            String tgl = "yyyy-MM-dd";
+            SimpleDateFormat fm = new SimpleDateFormat(tgl);
+            String tanggal = String.valueOf(fm.format(kolom_kadaluarsa.getDate()));
             String catatan = kolom_catatan.getText();
       
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
-            cn.createStatement().executeUpdate("UPDATE `obat` SET `nama_obat` = '"+namaObat+"', `nama_merek` = '"+namaMerek+"', `kategori` = '"+kategori+"', `harga_beli` = '"+hargaBeli+"', `jumlah_barang` = '"+jumlahBarang+"', `harga_jual` = '"+hargaJual+"', `expire` = '2021-04-23', `catatan` = '"+ catatan +"' WHERE `obat`.`id` = '"+kodeIdentitas+"'");
+            cn.createStatement().executeUpdate("UPDATE `obat` SET `nama_obat` = '"+namaObat+"', `nama_merek` = '"+namaMerek+"', `kategori` = '"+kategori+"', `harga_beli` = '"+hargaBeli+"', `jumlah_barang` = '"+jumlahBarang+"', `harga_jual` = '"+hargaJual+"', `expire` = '"+tanggal+"', `catatan` = '"+ catatan +"' WHERE `obat`.`id` = '"+kodeIdentitas+"'");
             bersihkan();
             tampilkan();
         } catch (SQLException ex) {
-            Logger.getLogger(obat.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,ex);
         }
     }//GEN-LAST:event_tombol_editActionPerformed
 
@@ -458,7 +483,7 @@ public class obat extends javax.swing.JFrame {
             tampilkan();
             bersihkan();
         } catch (SQLException ex) {
-            Logger.getLogger(obat.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,ex);
         }
     }//GEN-LAST:event_tombol_hapusActionPerformed
 
@@ -489,7 +514,11 @@ public class obat extends javax.swing.JFrame {
             kolom_harga_beli.setText(model.getValueAt(i, 4).toString());
             kolom_jumlah_barang.setText(model.getValueAt(i, 5).toString());
             kolom_harga_jual.setText(model.getValueAt(i, 6).toString());
-            kolom_catatan.setText(model.getValueAt(i, 7).toString());
+            
+            //merubah database/table ke kalom_kadaluarsa           
+            Date tanggal = Date.valueOf(model.getValueAt(i, 7).toString());
+            kolom_kadaluarsa.setDate(tanggal);
+            kolom_catatan.setText(model.getValueAt(i, 8).toString());
         }
     }//GEN-LAST:event_table_obatMouseClicked
 
@@ -512,6 +541,7 @@ public class obat extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -528,6 +558,7 @@ public class obat extends javax.swing.JFrame {
     private javax.swing.JTextField kolom_harga_beli;
     private javax.swing.JTextField kolom_harga_jual;
     private javax.swing.JTextField kolom_jumlah_barang;
+    private com.toedter.calendar.JDateChooser kolom_kadaluarsa;
     private javax.swing.JTextField kolom_kode_identitas;
     private javax.swing.JTextField kolom_nama_merek;
     private javax.swing.JTextField kolom_nama_obat;
@@ -551,7 +582,7 @@ public class obat extends javax.swing.JFrame {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
             ResultSet rs = cn.createStatement().executeQuery("Select * From obat");
             while(rs.next() ){
-                String data [] = {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(9) };
+                String data [] = {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9) };
                 model.addRow(data);
             }
         } catch (SQLException ex){
@@ -567,6 +598,7 @@ public class obat extends javax.swing.JFrame {
         kolom_harga_beli.setText("");
         kolom_jumlah_barang.setText("");
         kolom_harga_jual.setText("");
+        kolom_kadaluarsa.setDateFormatString("");
         kolom_catatan.setText("");
     }
 }
