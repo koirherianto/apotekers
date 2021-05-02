@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class penjualan extends javax.swing.JFrame {
 
     
-    String [] judul = {"kode Identitas","Nama Obat","Nama Merek","Kategori","Harga Jual","Catatan"};
+    String [] judul = {"kode Identitas","Nama Obat","Nama Merek","Kategori","Harga Jual","Expire"};
     DefaultTableModel model = new DefaultTableModel(judul,0);
     
     
@@ -221,7 +221,7 @@ public class penjualan extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Kode Identitas", "Nama Obat", "Nama Merek", "Kategori", "Harga Jual", "Catatan"
+                "Kode Identitas", "Nama Obat", "Nama Merek", "Kategori", "Harga Jual", "Expire"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -299,6 +299,11 @@ public class penjualan extends javax.swing.JFrame {
 
         btn_jual.setBackground(new java.awt.Color(0, 204, 255));
         btn_jual.setText("Jual");
+        btn_jual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_jualActionPerformed(evt);
+            }
+        });
 
         btn_hapus.setBackground(new java.awt.Color(204, 102, 0));
         btn_hapus.setText("Hapus");
@@ -588,14 +593,7 @@ public class penjualan extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_input_obatActionPerformed
 
     private void btn_bersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bersihkanActionPerformed
-        try {
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
-            cn.createStatement().executeUpdate("DELETE FROM `penjualan`");
-            tampilkan("");
-            tampilkan2();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,ex);
-        }
+        hapusTablePenjualan();
     }//GEN-LAST:event_btn_bersihkanActionPerformed
 
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
@@ -646,6 +644,33 @@ public class penjualan extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btn_kurangActionPerformed
+
+    private void btn_jualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_jualActionPerformed
+        
+        try {
+            int id, penguranganBarang;
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
+            ResultSet rs = cn.createStatement().executeQuery("SELECT * FROM penjualan INNER JOIN obat ON obat.id = penjualan.id");
+            while(rs.next() ){
+                id = rs.getInt(1);
+                penguranganBarang = rs.getInt(10) - rs.getInt(3);
+                JOptionPane.showMessageDialog(null,penguranganBarang);
+                query("UPDATE `obat` SET `jumlah_barang` = '"+penguranganBarang+"' WHERE `id` = '"+id+"' ");
+            }
+            hapusTablePenjualan();
+            tampilkan("");
+            tampilkan2();
+        } catch (SQLException ex){
+            //System.out.print("" + ex);
+            JOptionPane.showMessageDialog(null,ex);
+        }
+    
+
+        //kurangkan semua isi table obat berdasarkan umlah obat yang terjual
+        //jika obat kurang dari satu maka obat akan di hapus
+
+        //hapusTablePenjualan();
+    }//GEN-LAST:event_btn_jualActionPerformed
 
     public static void main(String args[]) {
         
@@ -704,7 +729,7 @@ public class penjualan extends javax.swing.JFrame {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
             ResultSet rs = cn.createStatement().executeQuery("Select * From obat");
             while(rs.next() ){
-                String data [] = {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(7),rs.getString(9) };
+                String data [] = {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(7),rs.getString(8) };
                 model.addRow(data);
             }
         } catch (SQLException ex){
@@ -713,8 +738,11 @@ public class penjualan extends javax.swing.JFrame {
         }
     }
     
-        private void tampilkan2() {
-        int row = table_penjualan.getRowCount();
+    
+    
+    private void tampilkan2() {
+        int row = table_penjualan.getRowCount();      
+        tampil_jumlah.setText("0");
         
         for (int i = 0; i < 50; i++) {
             table_penjualan.setValueAt("", i, 0);          
@@ -744,5 +772,26 @@ public class penjualan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,ex);
         }
     }
-
+    
+    private void hapusTablePenjualan(){
+        try {
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
+            cn.createStatement().executeUpdate("DELETE FROM `penjualan`");
+            tampilkan("");
+            tampilkan2();         
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,ex);
+        }  
+    }
+    
+    private void query(String stmt){
+        try {
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
+            cn.createStatement().executeUpdate(stmt);
+            tampilkan("");
+            tampilkan2();         
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,ex);
+        }  
+    }
 }
