@@ -101,7 +101,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btn_bersihkan" min="-2" pref="154" max="-2" attributes="0"/>
+                              <Component id="btn_bersihkan_pencarian" min="-2" pref="154" max="-2" attributes="0"/>
                               <Component id="btn_cari" min="-2" pref="154" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -132,7 +132,7 @@
                   <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                   <Component id="btn_cari" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btn_bersihkan" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btn_bersihkan_pencarian" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace pref="265" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -237,11 +237,8 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Cari"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cariActionPerformed"/>
-          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btn_bersihkan">
+        <Component class="javax.swing.JButton" name="btn_bersihkan_pencarian">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="66" type="rgb"/>
@@ -251,9 +248,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Bersihkan"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_bersihkanActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -440,7 +434,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btn_reset" alignment="2" max="32767" attributes="0"/>
+                      <Component id="btn_bersihkan" alignment="2" max="32767" attributes="0"/>
                       <Component id="btn_keluar" alignment="2" max="32767" attributes="0"/>
                       <Component id="btn_hapus" alignment="2" max="32767" attributes="0"/>
                       <Component id="btn_jual" alignment="2" max="32767" attributes="0"/>
@@ -450,7 +444,7 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jumlah" min="-2" max="-2" attributes="0"/>
+                          <Component id="tampil_jumlah" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
@@ -476,7 +470,7 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jumlah" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="tampil_jumlah" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
@@ -489,7 +483,7 @@
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Component id="btn_hapus" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="btn_reset" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btn_bersihkan" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Component id="btn_keluar" min="-2" pref="31" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -505,9 +499,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Tambah +"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_tambahActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_jual">
           <Properties>
@@ -516,9 +507,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Jual"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_jualActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_hapus">
           <Properties>
@@ -550,7 +538,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="ff" red="cc" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Pembelian"/>
+            <Property name="text" type="java.lang.String" value="Penjualan"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -560,7 +548,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="table_pembelian">
+            <Component class="javax.swing.JTable" name="table_penjualan">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="7">
@@ -612,7 +600,7 @@
             <Property name="text" type="java.lang.String" value="Total Belanja :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jumlah">
+        <Component class="javax.swing.JLabel" name="tampil_jumlah">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="18" style="1"/>
@@ -641,11 +629,8 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Kurang -"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_kurangActionPerformed"/>
-          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btn_reset">
+        <Component class="javax.swing.JButton" name="btn_bersihkan">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="66" type="rgb"/>
@@ -653,7 +638,7 @@
             <Property name="text" type="java.lang.String" value="Bersihkan"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_resetActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_bersihkanActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
