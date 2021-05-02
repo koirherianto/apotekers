@@ -23,7 +23,7 @@ public class penjualan extends javax.swing.JFrame {
         initComponents();
         setTitle("Mangemen Pengololaan Apotek");
         table_obat.setModel(model);
-        tampilkan();
+        tampilkan("");
         tampilkan2();
     }
 
@@ -256,11 +256,6 @@ public class penjualan extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(0, 153, 153));
         jButton4.setFont(new java.awt.Font("Tekton Pro Cond", 0, 16)); // NOI18N
         jButton4.setText("Riwayat  Tranksaksi");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
 
         jLabel17.setFont(new java.awt.Font("Tekton Pro Cond", 1, 36)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(204, 255, 204));
@@ -296,6 +291,11 @@ public class penjualan extends javax.swing.JFrame {
 
         btn_tambah.setBackground(new java.awt.Color(0, 255, 0));
         btn_tambah.setText("Tambah +");
+        btn_tambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambahActionPerformed(evt);
+            }
+        });
 
         btn_jual.setBackground(new java.awt.Color(0, 204, 255));
         btn_jual.setText("Jual");
@@ -322,6 +322,49 @@ public class penjualan extends javax.swing.JFrame {
 
         table_penjualan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -362,6 +405,11 @@ public class penjualan extends javax.swing.JFrame {
 
         btn_kurang.setBackground(new java.awt.Color(255, 0, 0));
         btn_kurang.setText("Kurang -");
+        btn_kurang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kurangActionPerformed(evt);
+            }
+        });
 
         btn_bersihkan.setBackground(new java.awt.Color(102, 255, 255));
         btn_bersihkan.setText("Bersihkan");
@@ -501,10 +549,10 @@ public class penjualan extends javax.swing.JFrame {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
             cn.createStatement().executeUpdate("INSERT INTO `penjualan` (`id`, `obat`, `jumlah`, `harga`) VALUES ('"+id+"', '"+namaObat+"', '"+jml+"', '"+hargaJual+"')");
             //bersihkan();
-            tampilkan();
+            tampilkan("");
             tampilkan2();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,ex);
+                JOptionPane.showMessageDialog(null,"Yang Anda klik sudah Ada di dalam daftar cuy");
             }
         }         
     }//GEN-LAST:event_table_obatMouseClicked
@@ -514,14 +562,13 @@ public class penjualan extends javax.swing.JFrame {
     }//GEN-LAST:event_tombol_hapusActionPerformed
 
     private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
-        int i = table_penjualan.getSelectedRow();           
-        i = Integer.parseInt(table_penjualan.getValueAt(i, 0).toString());
-        //JOptionPane.showMessageDialog(null,k);
+        int baris = table_penjualan.getSelectedRow();           
+        int id = Integer.parseInt(table_penjualan.getValueAt(baris, 0).toString());
         
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");        
-            cn.createStatement().executeUpdate("DELETE FROM `penjualan` WHERE `penjualan`.`id` = '"+i+"'");
-            tampilkan();
+            cn.createStatement().executeUpdate("DELETE FROM `penjualan` WHERE `penjualan`.`id` = '"+id+"'");
+            tampilkan("");
             tampilkan2();
             //bersihkan();
         } catch (SQLException ex) {
@@ -544,17 +591,61 @@ public class penjualan extends javax.swing.JFrame {
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
             cn.createStatement().executeUpdate("DELETE FROM `penjualan`");
-            tampilkan();
+            tampilkan("");
             tampilkan2();
-            //bersihkan();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,ex);
         }
     }//GEN-LAST:event_btn_bersihkanActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
+        //mengambil id
+        int baris = table_penjualan.getSelectedRow();           
+        int id = Integer.parseInt(table_penjualan.getValueAt(baris, 0).toString());
+        //mengambil jml
+        int jml = Integer.parseInt(table_penjualan.getValueAt(baris, 2).toString()) + 1;
+        try {
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");        
+            cn.createStatement().executeUpdate("UPDATE `penjualan` SET `jumlah` = '"+jml+"' WHERE `penjualan`.`id` = '"+id+"' ");
+            tampilkan("");
+            tampilkan2();
+            //bersihkan();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,ex);
+        }
+    }//GEN-LAST:event_btn_tambahActionPerformed
+
+    private void btn_kurangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kurangActionPerformed
+        int baris = table_penjualan.getSelectedRow();           
+        int id = Integer.parseInt(table_penjualan.getValueAt(baris, 0).toString());
+        //mengambil jml
+        int jumlah = Integer.parseInt(table_penjualan.getValueAt(baris, 2).toString());
+        
+        if (jumlah > 1) {
+            try {
+            jumlah--;
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");        
+            cn.createStatement().executeUpdate("UPDATE `penjualan` SET `jumlah` = '"+jumlah+"' WHERE `penjualan`.`id` = '"+id+"' ");
+            tampilkan("");
+            tampilkan2();
+            //bersihkan();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,ex);
+            }
+        }else{
+            try {
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");        
+            cn.createStatement().executeUpdate("DELETE FROM `penjualan` WHERE `penjualan`.`id` = '"+id+"' ");
+            tampilkan("");
+            tampilkan2();
+            //bersihkan();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,ex);
+            }
+        }
+        
+        
+    }//GEN-LAST:event_btn_kurangActionPerformed
 
     public static void main(String args[]) {
         
@@ -601,8 +692,9 @@ public class penjualan extends javax.swing.JFrame {
     private javax.swing.JButton tombol_hapus;
     // End of variables declaration//GEN-END:variables
 
-    private void tampilkan() {
+    private void tampilkan(String ss) {
  
+        ss = "lala";
         int row = table_obat.getRowCount();
         for (int i = 0; i < row; i++) {
             model.removeRow(0);
@@ -624,7 +716,7 @@ public class penjualan extends javax.swing.JFrame {
         private void tampilkan2() {
         int row = table_penjualan.getRowCount();
         
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 50; i++) {
             table_penjualan.setValueAt("", i, 0);          
             table_penjualan.setValueAt("", i, 1);            
             table_penjualan.setValueAt("", i, 2);          
