@@ -23,7 +23,7 @@ public class penjualan extends javax.swing.JFrame {
         initComponents();
         setTitle("Mangemen Pengololaan Apotek");
         table_obat.setModel(model);
-        tampilkan("");
+        tampilkanTableObat("");
         tampilkan2();
     }
 
@@ -548,17 +548,9 @@ public class penjualan extends javax.swing.JFrame {
             int id = Integer.parseInt(model.getValueAt(i, 0).toString());
             String namaObat = model.getValueAt(i, 1).toString();
             int jml = 1;
-            int hargaJual = Integer.parseInt(model.getValueAt(i, 4).toString());
+            int hargaJual = Integer.parseInt(model.getValueAt(i, 4).toString());         
             
-            try {
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
-            cn.createStatement().executeUpdate("INSERT INTO `penjualan` (`id`, `obat`, `jumlah`, `harga`) VALUES ('"+id+"', '"+namaObat+"', '"+jml+"', '"+hargaJual+"')");
-            //bersihkan();
-            tampilkan("");
-            tampilkan2();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Yang Anda klik sudah Ada di dalam daftar cuy");
-            }
+            query("INSERT INTO `penjualan` (`id`, `obat`, `jumlah`, `harga`) VALUES ('"+id+"', '"+namaObat+"', '"+jml+"', '"+hargaJual+"')","Yang Anda klik sudah Ada di dalam daftar cuy");
         }         
     }//GEN-LAST:event_table_obatMouseClicked
 
@@ -570,15 +562,7 @@ public class penjualan extends javax.swing.JFrame {
         int baris = table_penjualan.getSelectedRow();           
         int id = Integer.parseInt(table_penjualan.getValueAt(baris, 0).toString());
         
-        try {
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");        
-            cn.createStatement().executeUpdate("DELETE FROM `penjualan` WHERE `penjualan`.`id` = '"+id+"'");
-            tampilkan("");
-            tampilkan2();
-            //bersihkan();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,ex);
-        }
+        query("DELETE FROM `penjualan` WHERE `penjualan`.`id` = '"+id+"'","");
         
     }//GEN-LAST:event_btn_hapusActionPerformed
 
@@ -593,7 +577,7 @@ public class penjualan extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_input_obatActionPerformed
 
     private void btn_bersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bersihkanActionPerformed
-        hapusTablePenjualan();
+        hapusIsiTablePenjualan();
     }//GEN-LAST:event_btn_bersihkanActionPerformed
 
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
@@ -602,15 +586,8 @@ public class penjualan extends javax.swing.JFrame {
         int id = Integer.parseInt(table_penjualan.getValueAt(baris, 0).toString());
         //mengambil jml
         int jml = Integer.parseInt(table_penjualan.getValueAt(baris, 2).toString()) + 1;
-        try {
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");        
-            cn.createStatement().executeUpdate("UPDATE `penjualan` SET `jumlah` = '"+jml+"' WHERE `penjualan`.`id` = '"+id+"' ");
-            tampilkan("");
-            tampilkan2();
-            //bersihkan();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,ex);
-        }
+              
+        query("UPDATE `penjualan` SET `jumlah` = '"+jml+"' WHERE `penjualan`.`id` = '"+id+"' ","");
     }//GEN-LAST:event_btn_tambahActionPerformed
 
     private void btn_kurangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kurangActionPerformed
@@ -620,29 +597,11 @@ public class penjualan extends javax.swing.JFrame {
         int jumlah = Integer.parseInt(table_penjualan.getValueAt(baris, 2).toString());
         
         if (jumlah > 1) {
-            try {
-            jumlah--;
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");        
-            cn.createStatement().executeUpdate("UPDATE `penjualan` SET `jumlah` = '"+jumlah+"' WHERE `penjualan`.`id` = '"+id+"' ");
-            tampilkan("");
-            tampilkan2();
-            //bersihkan();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,ex);
-            }
+            jumlah--;          
+            query("UPDATE `penjualan` SET `jumlah` = '"+jumlah+"' WHERE `penjualan`.`id` = '"+id+"' ","");
         }else{
-            try {
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");        
-            cn.createStatement().executeUpdate("DELETE FROM `penjualan` WHERE `penjualan`.`id` = '"+id+"' ");
-            tampilkan("");
-            tampilkan2();
-            //bersihkan();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,ex);
-            }
-        }
-        
-        
+            query("DELETE FROM `penjualan` WHERE `penjualan`.`id` = '"+id+"' ","");
+        } 
     }//GEN-LAST:event_btn_kurangActionPerformed
 
     private void btn_jualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_jualActionPerformed
@@ -655,21 +614,14 @@ public class penjualan extends javax.swing.JFrame {
                 id = rs.getInt(1);
                 penguranganBarang = rs.getInt(10) - rs.getInt(3);
                 JOptionPane.showMessageDialog(null,penguranganBarang);
-                query("UPDATE `obat` SET `jumlah_barang` = '"+penguranganBarang+"' WHERE `id` = '"+id+"' ");
+                query("UPDATE `obat` SET `jumlah_barang` = '"+penguranganBarang+"' WHERE `id` = '"+id+"' ","");
             }
-            hapusTablePenjualan();
-            tampilkan("");
+            hapusIsiTablePenjualan();
+            tampilkanTableObat("");
             tampilkan2();
         } catch (SQLException ex){
-            //System.out.print("" + ex);
             JOptionPane.showMessageDialog(null,ex);
         }
-    
-
-        //kurangkan semua isi table obat berdasarkan umlah obat yang terjual
-        //jika obat kurang dari satu maka obat akan di hapus
-
-        //hapusTablePenjualan();
     }//GEN-LAST:event_btn_jualActionPerformed
 
     public static void main(String args[]) {
@@ -717,7 +669,7 @@ public class penjualan extends javax.swing.JFrame {
     private javax.swing.JButton tombol_hapus;
     // End of variables declaration//GEN-END:variables
 
-    private void tampilkan(String ss) {
+    private void tampilkanTableObat(String ss) {
  
         ss = "lala";
         int row = table_obat.getRowCount();
@@ -773,25 +725,29 @@ public class penjualan extends javax.swing.JFrame {
         }
     }
     
-    private void hapusTablePenjualan(){
+    private void hapusIsiTablePenjualan(){
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
             cn.createStatement().executeUpdate("DELETE FROM `penjualan`");
-            tampilkan("");
+            tampilkanTableObat("");
             tampilkan2();         
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,ex);
         }  
     }
     
-    private void query(String stmt){
+    private void query(String stmt,String error){
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
             cn.createStatement().executeUpdate(stmt);
-            tampilkan("");
+            tampilkanTableObat("");
             tampilkan2();         
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,ex);
+            if (error.isEmpty()) {
+                JOptionPane.showMessageDialog(null,ex);
+            }else{              
+                JOptionPane.showMessageDialog(null,error);
+            }         
         }  
     }
 }
