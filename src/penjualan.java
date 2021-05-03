@@ -12,12 +12,10 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class penjualan extends javax.swing.JFrame {
-
+public class penjualan extends transaksi {
     
     String [] judul = {"kode Identitas","Nama Obat","Nama Merek","Kategori","Harga Jual","Expire"};
     DefaultTableModel model = new DefaultTableModel(judul,0);
-    
     
     public penjualan() {
         initComponents();
@@ -546,7 +544,7 @@ public class penjualan extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_keluarActionPerformed
 
     private void menu_input_obatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_input_obatActionPerformed
-        new obat().setVisible(true);
+        new pembelian().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_menu_input_obatActionPerformed
 
@@ -647,9 +645,9 @@ public class penjualan extends javax.swing.JFrame {
 
     private void tampilkanTableObat(String stmt) {
  
-            if (stmt.isEmpty()) {
-                stmt = "Select * From obat";
-            }   
+        if (stmt.isEmpty()) {
+           stmt = "Select * From obat";
+        }   
         
         int row = table_obat.getRowCount();
         for (int i = 0; i < row; i++) {
@@ -713,19 +711,11 @@ public class penjualan extends javax.swing.JFrame {
         }  
     }
     
-    private void query(String stmt,String error){
-        try {
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
-            cn.createStatement().executeUpdate(stmt);
-            tampilkanTableObat("");
-            tampilkanTablePenjualan();         
-        } catch (SQLException ex) {
-            if (error.isEmpty()) {
-                JOptionPane.showMessageDialog(null,ex);
-            }else{              
-                JOptionPane.showMessageDialog(null,error);
-            }         
-        }  
+    @Override
+    public void query(String stmt,String error){
+        super.query(stmt,error); 
+        tampilkanTableObat("");
+        tampilkanTablePenjualan(); 
     }
     
     private void bersihkanKolomPencarian(){

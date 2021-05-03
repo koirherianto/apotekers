@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -13,12 +12,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class obat extends javax.swing.JFrame {
+public class pembelian extends transaksi{
     
     String [] judul = {"kode Identitas","Nama Obat","Nama Merek","Kategori","Harga Beli","Jumlah Barang","Harga Jual","Kadaluarsa","Catatan"};
     DefaultTableModel model = new DefaultTableModel(judul,0);
     
-    public obat() {
+    public pembelian() {
         initComponents();          
         setTitle("Mangemen Pengololaan Apotek");
         table_obat.setModel(model);
@@ -312,7 +311,7 @@ public class obat extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(102, 0, 102));
@@ -503,7 +502,8 @@ public class obat extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
                 .addGap(50, 50, 50))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -630,7 +630,7 @@ public class obat extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new obat().setVisible(true);
+                new pembelian().setVisible(true);
             }
         });
     }
@@ -709,20 +709,10 @@ public class obat extends javax.swing.JFrame {
         kolom_catatan.setText("");
     }
     
-    private void query(String stmt,String error){
-        try {
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
-            cn.createStatement().executeUpdate(stmt);
-            tampilkanTableObat();
-            bersihkanKolom();         
-        } catch (SQLException ex) {
-            if (error.isEmpty()) {
-                JOptionPane.showMessageDialog(null,ex);
-            }else if(error == "noError"){
-                
-            } else{              
-                JOptionPane.showMessageDialog(null,error);
-            }         
-        }  
+    @Override
+    public void query(String stmt,String error){
+        super.query(stmt, error);        
+        tampilkanTableObat();
+        bersihkanKolom(); 
     }
 }
