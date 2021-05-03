@@ -593,8 +593,9 @@ public class penjualan extends transaksi {
     private void btn_cariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cariActionPerformed
         String namaObat = kolom_nama_obat.getText();
         namaObat = namaObat.trim().replaceAll("\\s+", " ");
-        tampilkanTableObat("SELECT * FROM obat WHERE nama_obat like '%"+namaObat+"%'");
-        bersihkanKolomPencarian();
+        
+        cari("SELECT * FROM obat WHERE nama_obat like '%"+namaObat+"%'");
+        
     }//GEN-LAST:event_btn_cariActionPerformed
 
     private void btn_bersihkan_pencarianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bersihkan_pencarianActionPerformed
@@ -720,5 +721,11 @@ public class penjualan extends transaksi {
     
     private void bersihkanKolomPencarian(){
         kolom_nama_obat.setText("");
+    }
+
+    @Override
+    public void cari(String stmt) {
+        tampilkanTableObat(stmt);
+        bersihkanKolomPencarian();
     }
 }
