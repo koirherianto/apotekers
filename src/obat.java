@@ -22,7 +22,8 @@ public class obat extends javax.swing.JFrame {
         initComponents();          
         setTitle("Mangemen Pengololaan Apotek");
         table_obat.setModel(model);
-        tampilkan();
+        tampilkanTableObat();
+        bersihkanKolom();
     }
  
  
@@ -488,7 +489,7 @@ public class obat extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(2, 2, 2))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -541,18 +542,10 @@ public class obat extends javax.swing.JFrame {
     
     String catatan = kolom_catatan.getText();
     
-    try {          
-         Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
-         cn.createStatement().executeUpdate("INSERT INTO `obat` (`id`, `nama_obat`, `nama_merek`, `kategori`, `harga_beli`, `jumlah_barang`, `harga_jual`, `expire`, `catatan`) VALUES (NULL, '"+namaObat+"', '"+namaMerek+"', '"+kategori+"', '"+hargaBeli+"', '"+jumlahBarang+"', '"+hargaJual+"', '"+tanggal+"', '"+catatan+"')");           
-         bersihkan();
-         tampilkan();
-       } catch (SQLException ex) {
-         JOptionPane.showMessageDialog(null,ex);
-       }
+    query("INSERT INTO `obat` (`id`, `nama_obat`, `nama_merek`, `kategori`, `harga_beli`, `jumlah_barang`, `harga_jual`, `expire`, `catatan`) VALUES (NULL, '"+namaObat+"', '"+namaMerek+"', '"+kategori+"', '"+hargaBeli+"', '"+jumlahBarang+"', '"+hargaJual+"', '"+tanggal+"', '"+catatan+"')","");
     }//GEN-LAST:event_tombol_tambahActionPerformed
 
     private void tombol_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombol_editActionPerformed
-        try {
             String kodeIdentitas = kolom_id.getText();
             String namaObat = kolom_nama_obat.getText();
             String namaMerek = kolom_nama_merek.getText();
@@ -578,31 +571,18 @@ public class obat extends javax.swing.JFrame {
             SimpleDateFormat fm = new SimpleDateFormat(tgl);
             String tanggal = String.valueOf(fm.format(kolom_kadaluarsa.getDate()));
             String catatan = kolom_catatan.getText();
-      
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
-            cn.createStatement().executeUpdate("UPDATE `obat` SET `nama_obat` = '"+namaObat+"', `nama_merek` = '"+namaMerek+"', `kategori` = '"+kategori+"', `harga_beli` = '"+hargaBeli+"', `jumlah_barang` = '"+jumlahBarang+"', `harga_jual` = '"+hargaJual+"', `expire` = '"+tanggal+"', `catatan` = '"+ catatan +"' WHERE `obat`.`id` = '"+kodeIdentitas+"'");
-            bersihkan();
-            tampilkan();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,ex);
-        }
+        
+        query("UPDATE `obat` SET `nama_obat` = '"+namaObat+"', `nama_merek` = '"+namaMerek+"', `kategori` = '"+kategori+"', `harga_beli` = '"+hargaBeli+"', `jumlah_barang` = '"+jumlahBarang+"', `harga_jual` = '"+hargaJual+"', `expire` = '"+tanggal+"', `catatan` = '"+ catatan +"' WHERE `obat`.`id` = '"+kodeIdentitas+"' ","");
     }//GEN-LAST:event_tombol_editActionPerformed
 
     private void tombol_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombol_hapusActionPerformed
-        try {
-            String id = kolom_id.getText();
-            
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
-            cn.createStatement().executeUpdate("DELETE FROM `obat` WHERE `obat`.`id` = '" +id+ "'");
-            tampilkan();
-            bersihkan();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,ex);
-        }
+        String id = kolom_id.getText();
+        query("DELETE FROM `obat` WHERE `obat`.`id` = '" +id+ "'","");
+        query("DELETE FROM `penjualan` WHERE `obat`.`id` = '" +id+ "'","noError");
     }//GEN-LAST:event_tombol_hapusActionPerformed
 
     private void tombol_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombol_resetActionPerformed
-       bersihkan();
+       bersihkanKolom();
     }//GEN-LAST:event_tombol_resetActionPerformed
 
     private void table_obatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_obatMouseClicked
@@ -698,7 +678,7 @@ public class obat extends javax.swing.JFrame {
     private javax.swing.JButton tombol_tambah;
     // End of variables declaration//GEN-END:variables
 
-    private void tampilkan() {
+    private void tampilkanTableObat() {
  
         int row = table_obat.getRowCount();
         for (int i = 0; i < row; i++) {
@@ -718,14 +698,31 @@ public class obat extends javax.swing.JFrame {
         }
     }
     
-    private void bersihkan(){
+    private void bersihkanKolom(){
         kolom_id.setText("");
         kolom_nama_obat.setText("");
         kolom_nama_merek.setText("");             
         kolom_harga_beli.setText("");
         kolom_jumlah_barang.setText("");
         kolom_harga_jual.setText("");
-        kolom_kadaluarsa.setDateFormatString("");
+        //kolom_kadaluarsa.setDateFormatString("");
         kolom_catatan.setText("");
+    }
+    
+    private void query(String stmt,String error){
+        try {
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
+            cn.createStatement().executeUpdate(stmt);
+            tampilkanTableObat();
+            bersihkanKolom();         
+        } catch (SQLException ex) {
+            if (error.isEmpty()) {
+                JOptionPane.showMessageDialog(null,ex);
+            }else if(error == "noError"){
+                
+            } else{              
+                JOptionPane.showMessageDialog(null,error);
+            }         
+        }  
     }
 }
