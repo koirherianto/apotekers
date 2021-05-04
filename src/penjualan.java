@@ -9,10 +9,13 @@ import java.sql.Date;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class penjualan extends transaksi {
+public class penjualan extends apotek {
     
     String [] judul = {"kode Identitas","Nama Obat","Nama Merek","Kategori","Harga Jual","Expire"};
     DefaultTableModel model = new DefaultTableModel(judul,0);
@@ -42,7 +45,7 @@ public class penjualan extends transaksi {
         table_obat = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         menu_input_obat = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        menu_riwayat_transaksi = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btn_tambah = new javax.swing.JButton();
@@ -218,16 +221,21 @@ public class penjualan extends transaksi {
 
         menu_input_obat.setBackground(new java.awt.Color(0, 153, 153));
         menu_input_obat.setFont(new java.awt.Font("Tekton Pro Cond", 0, 16)); // NOI18N
-        menu_input_obat.setText("Input  Obat");
+        menu_input_obat.setText("Penjualan");
         menu_input_obat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_input_obatActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(0, 153, 153));
-        jButton4.setFont(new java.awt.Font("Tekton Pro Cond", 0, 16)); // NOI18N
-        jButton4.setText("Riwayat  Tranksaksi");
+        menu_riwayat_transaksi.setBackground(new java.awt.Color(0, 153, 153));
+        menu_riwayat_transaksi.setFont(new java.awt.Font("Tekton Pro Cond", 0, 16)); // NOI18N
+        menu_riwayat_transaksi.setText("Riwayat  Tranksaksi");
+        menu_riwayat_transaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_riwayat_transaksiActionPerformed(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Tekton Pro Cond", 1, 36)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(204, 255, 204));
@@ -241,7 +249,7 @@ public class penjualan extends transaksi {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(menu_input_obat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(menu_riwayat_transaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -255,7 +263,7 @@ public class penjualan extends transaksi {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(menu_input_obat)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addComponent(menu_riwayat_transaksi)
                 .addContainerGap())
         );
 
@@ -487,14 +495,14 @@ public class penjualan extends transaksi {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -574,15 +582,30 @@ public class penjualan extends transaksi {
     }//GEN-LAST:event_btn_kurangActionPerformed
 
     private void btn_jualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_jualActionPerformed
-        try {
-            int id, penguranganBarang;
+        int id, penguranganBarang,jumlahBarang,hargaJual,totalHarga;
+        String namaObat,namaMerek,kategori,tanggalBeli;
+        try {       
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
             ResultSet rs = cn.createStatement().executeQuery("SELECT * FROM penjualan INNER JOIN obat ON obat.id = penjualan.id");
             while(rs.next() ){
                 id = rs.getInt(1);
                 penguranganBarang = rs.getInt(10) - rs.getInt(3);
-                //JOptionPane.showMessageDialog(null,penguranganBarang);
+                //query apotek
+                namaObat = rs.getString(6);
+                namaMerek = rs.getString(7);
+                kategori = rs.getString(8);
+                //
+                jumlahBarang = rs.getInt(3);
+                hargaJual = rs.getInt(4);
+                totalHarga = jumlahBarang * hargaJual;
+                
+                //tangggal beli
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                tanggalBeli = dtf.format(now);
+                JOptionPane.showMessageDialog(null,tanggalBeli);
                 query("UPDATE `obat` SET `jumlah_barang` = '"+penguranganBarang+"' WHERE `id` = '"+id+"' ","");
+                query("INSERT INTO `transaksi` (`id`, `nama_obat`, `nama_merek`, `kategori`, `jumlah_barang`, `harga_jual`, `total_harga`, `tanggal_beli`) VALUES (NULL, '"+namaObat+"', '"+namaMerek+"', '"+kategori+"', '"+jumlahBarang+"', '"+hargaJual+"', '"+totalHarga+"', '"+tanggalBeli+"')","");
             }
             hapusIsiTablePenjualan();
         } catch (SQLException ex){
@@ -603,6 +626,11 @@ public class penjualan extends transaksi {
         tampilkanTableObat("");
     }//GEN-LAST:event_btn_bersihkan_pencarianActionPerformed
 
+    private void menu_riwayat_transaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_riwayat_transaksiActionPerformed
+        new transaksi().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_menu_riwayat_transaksiActionPerformed
+
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -621,7 +649,6 @@ public class penjualan extends transaksi {
     private javax.swing.JButton btn_keluar;
     private javax.swing.JButton btn_kurang;
     private javax.swing.JButton btn_tambah;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -638,6 +665,7 @@ public class penjualan extends transaksi {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField kolom_nama_obat;
     private javax.swing.JButton menu_input_obat;
+    private javax.swing.JButton menu_riwayat_transaksi;
     private javax.swing.JTable table_obat;
     private javax.swing.JTable table_penjualan;
     private javax.swing.JLabel tampil_jumlah;
@@ -647,7 +675,7 @@ public class penjualan extends transaksi {
     private void tampilkanTableObat(String stmt) {
  
         if (stmt.isEmpty()) {
-           stmt = "Select * From obat";
+           stmt = "SELECT * FROM obat";
         }   
         
         int row = table_obat.getRowCount();
@@ -683,7 +711,7 @@ public class penjualan extends transaksi {
             int i = 0;
             int tampil_harga = 0;
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
-            ResultSet rs = cn.createStatement().executeQuery("Select * From penjualan");
+            ResultSet rs = cn.createStatement().executeQuery("SELECT * FROM penjualan");
             while(rs.next() ){
                 
                 tampil_harga += Integer.parseInt(rs.getString(4)) * Integer.parseInt(rs.getString(3));

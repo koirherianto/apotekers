@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class pembelian extends transaksi{
+public class pembelian extends apotek{
     
     String [] judul = {"kode Identitas","Nama Obat","Nama Merek","Kategori","Harga Beli","Jumlah Barang","Harga Jual","Kadaluarsa","Catatan"};
     DefaultTableModel model = new DefaultTableModel(judul,0);
@@ -66,7 +66,7 @@ public class pembelian extends transaksi{
         jLabel15 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         menu_penjualan = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        menu_riwayat_transaksi = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -318,7 +318,7 @@ public class pembelian extends transaksi{
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(102, 0, 102));
@@ -424,9 +424,14 @@ public class pembelian extends transaksi{
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(0, 153, 153));
-        jButton2.setFont(new java.awt.Font("Tekton Pro Cond", 0, 16)); // NOI18N
-        jButton2.setText("Riwayat  Tranksaksi");
+        menu_riwayat_transaksi.setBackground(new java.awt.Color(0, 153, 153));
+        menu_riwayat_transaksi.setFont(new java.awt.Font("Tekton Pro Cond", 0, 16)); // NOI18N
+        menu_riwayat_transaksi.setText("Riwayat  Tranksaksi");
+        menu_riwayat_transaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_riwayat_transaksiActionPerformed(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Tekton Pro Cond", 1, 36)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(204, 255, 204));
@@ -440,7 +445,7 @@ public class pembelian extends transaksi{
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(menu_penjualan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                    .addComponent(menu_riwayat_transaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -454,7 +459,7 @@ public class pembelian extends transaksi{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menu_penjualan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(menu_riwayat_transaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -573,23 +578,18 @@ public class pembelian extends transaksi{
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -710,7 +710,7 @@ public class pembelian extends transaksi{
     private void btn_cariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cariActionPerformed
         String namaObat = kolom_cari_nama_obat.getText();
         namaObat = namaObat.trim().replaceAll("\\s+", " ");
-        cari("SELECT * FROM obat WHERE nama_obat like '%"+namaObat+"%'");
+        cari("SELECT * FROM obat WHERE nama_obat Like '%"+namaObat+"%'");
 
     }//GEN-LAST:event_btn_cariActionPerformed
 
@@ -718,6 +718,11 @@ public class pembelian extends transaksi{
         kolom_cari_nama_obat.setText("");
         tampilkanTableObat("");
     }//GEN-LAST:event_btn_bersihkan_pencarianActionPerformed
+
+    private void menu_riwayat_transaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_riwayat_transaksiActionPerformed
+        new transaksi().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_menu_riwayat_transaksiActionPerformed
 
     public static void main(String args[]) {
         
@@ -731,7 +736,6 @@ public class pembelian extends transaksi{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_bersihkan_pencarian;
     private javax.swing.JButton btn_cari;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -769,6 +773,7 @@ public class pembelian extends transaksi{
     private javax.swing.JTextField kolom_nama_merek;
     private javax.swing.JTextField kolom_nama_obat;
     private javax.swing.JButton menu_penjualan;
+    private javax.swing.JButton menu_riwayat_transaksi;
     private javax.swing.JComboBox<String> pilihan;
     private javax.swing.JTable table_obat;
     private javax.swing.JButton tombol_edit;
