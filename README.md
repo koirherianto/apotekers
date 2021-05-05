@@ -2,8 +2,7 @@ Aplikasi Menejemen Apoteek Java Netbean
 
 CATATAN JIKA DIPERLUKAN
 //LINK DATABASE (JIKA PINGIN EKSPOR)
-https://drive.google.com/file/d/1Dxg-SEulKXoph5mJKW40AVGzF5VKcgJ_/view
-
+https://drive.google.com/file/d/1Dxg-SEulKXoph5mJKW40AVGzF5VKcgJ_/view?usp=sharing
 //MENAMBAH LIBRARY MYSQL JDBC
 http://www.arifweb.com/2015/04/cara-menambah-library-jdbc-java-netbeans.html
 
