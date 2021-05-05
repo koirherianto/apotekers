@@ -11,16 +11,53 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class pembelian extends apotek{
     
-    String [] judul = {"kode Identitas","Nama Obat","Nama Merek","Kategori","Harga Beli","Jumlah Barang","Harga Jual","Kadaluarsa","Catatan"};
+    String [] judul = {"id","Nama Obat","Nama Merek","Kategori","Harga Beli","Jumlah","Harga Jual","Kadaluarsa","Beli Awal","Total Awal","Catatan"};
     DefaultTableModel model = new DefaultTableModel(judul,0);
+    TableColumn column;
+    
     
     public pembelian() {
         initComponents();          
         setTitle("Mangemen Pengololaan Apotek");
         table_obat.setModel(model);
+        table_obat.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        //id
+        column = table_obat.getColumnModel().getColumn(0);
+        column.setPreferredWidth(20);
+        //nama obat
+        column = table_obat.getColumnModel().getColumn(1);
+        column.setPreferredWidth(35);
+        //merek
+        column = table_obat.getColumnModel().getColumn(2);
+        column.setPreferredWidth(35);
+        //kategori
+        column = table_obat.getColumnModel().getColumn(3);
+        column.setPreferredWidth(10);
+        //harga beli
+        column = table_obat.getColumnModel().getColumn(4);
+        column.setPreferredWidth(40);
+        //jumlah
+        column = table_obat.getColumnModel().getColumn(5);
+        column.setPreferredWidth(20);    
+        //harga Jual
+        column = table_obat.getColumnModel().getColumn(6);
+        column.setPreferredWidth(40);               
+        //kadaluarsa
+        column = table_obat.getColumnModel().getColumn(7);
+        column.setPreferredWidth(40);      
+        //kadaluarsa
+        column = table_obat.getColumnModel().getColumn(8);
+        column.setPreferredWidth(40);
+        //kadaluarsa
+        column = table_obat.getColumnModel().getColumn(9);
+        column.setPreferredWidth(40);
+        
+        
         tampilkanTableObat("");
         bersihkanKolom();
     }
@@ -568,7 +605,7 @@ public class pembelian extends apotek{
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -623,7 +660,10 @@ public class pembelian extends apotek{
     
     String catatan = kolom_catatan.getText();
     
-    query("INSERT INTO `obat` (`id`, `nama_obat`, `nama_merek`, `kategori`, `harga_beli`, `jumlah_barang`, `harga_jual`, `expire`, `catatan`) VALUES (NULL, '"+namaObat+"', '"+namaMerek+"', '"+kategori+"', '"+hargaBeli+"', '"+jumlahBarang+"', '"+hargaJual+"', '"+tanggal+"', '"+catatan+"')","");
+    int jumlahAwal = jumlahBarang;
+    int totalAwal = jumlahAwal * hargaBeli;
+    
+    query("INSERT INTO `obat` (`id`, `nama_obat`, `nama_merek`, `kategori`, `harga_beli`, `jumlah_barang`, `harga_jual`, `expire`, `catatan`, `jumlah_awal`, `total_awal`) VALUES (NULL, '"+namaObat+"', '"+namaMerek+"', '"+kategori+"', '"+hargaBeli+"', '"+jumlahBarang+"', '"+hargaJual+"', '"+tanggal+"', '"+catatan+"', '"+jumlahAwal+"', '"+totalAwal+"')","");
     }//GEN-LAST:event_tombol_tambahActionPerformed
 
     private void tombol_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombol_editActionPerformed
@@ -798,7 +838,7 @@ public class pembelian extends apotek{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
             ResultSet rs = cn.createStatement().executeQuery(stmt);
             while(rs.next() ){
-                String data [] = {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9) };
+                String data [] = {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(10),rs.getString(11),rs.getString(9) };
                 model.addRow(data);
             }
         } catch (SQLException ex){

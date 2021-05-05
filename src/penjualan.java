@@ -221,7 +221,7 @@ public class penjualan extends apotek {
 
         menu_input_obat.setBackground(new java.awt.Color(0, 153, 153));
         menu_input_obat.setFont(new java.awt.Font("Tekton Pro Cond", 0, 16)); // NOI18N
-        menu_input_obat.setText("Penjualan");
+        menu_input_obat.setText("Pembelian");
         menu_input_obat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_input_obatActionPerformed(evt);
@@ -498,11 +498,11 @@ public class penjualan extends apotek {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -582,7 +582,7 @@ public class penjualan extends apotek {
     }//GEN-LAST:event_btn_kurangActionPerformed
 
     private void btn_jualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_jualActionPerformed
-        int id, penguranganBarang,jumlahBarang,hargaJual,totalHarga;
+        int id, penguranganBarang,jumlahBarang,hargaJual,totalHarga,hargaBeli;
         String namaObat,namaMerek,kategori,tanggalBeli;
         try {       
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/apotek","root","");
@@ -598,14 +598,14 @@ public class penjualan extends apotek {
                 jumlahBarang = rs.getInt(3);
                 hargaJual = rs.getInt(4);
                 totalHarga = jumlahBarang * hargaJual;
+                hargaBeli = rs.getInt(9);
                 
                 //tangggal beli
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                 LocalDateTime now = LocalDateTime.now();
                 tanggalBeli = dtf.format(now);
-                JOptionPane.showMessageDialog(null,tanggalBeli);
                 query("UPDATE `obat` SET `jumlah_barang` = '"+penguranganBarang+"' WHERE `id` = '"+id+"' ","");
-                query("INSERT INTO `transaksi` (`id`, `nama_obat`, `nama_merek`, `kategori`, `jumlah_barang`, `harga_jual`, `total_harga`, `tanggal_beli`) VALUES (NULL, '"+namaObat+"', '"+namaMerek+"', '"+kategori+"', '"+jumlahBarang+"', '"+hargaJual+"', '"+totalHarga+"', '"+tanggalBeli+"')","");
+                query("INSERT INTO `transaksi` (`id`, `nama_obat`, `nama_merek`, `kategori`, `jumlah_barang`, `harga_jual`, `total_harga`, `tanggal_beli`, `harga_beli`) VALUES (NULL, '"+namaObat+"', '"+namaMerek+"', '"+kategori+"', '"+jumlahBarang+"', '"+hargaJual+"', '"+totalHarga+"', '"+tanggalBeli+"','"+hargaBeli+"')","");
             }
             hapusIsiTablePenjualan();
         } catch (SQLException ex){
