@@ -2,7 +2,7 @@ Aplikasi Menejemen Apoteek Java Netbean
 
 CATATAN JIKA DIPERLUKAN
 
-//LINK DATABASE (JIKA PINGIN EKSPOR)
+//LINK DATABASE (JIKA PINGIN EKSPOR) //nama databaseya apotek
 https://drive.google.com/file/d/1Dxg-SEulKXoph5mJKW40AVGzF5VKcgJ_/view?usp=sharing
 
 //MENAMBAH LIBRARY MYSQL JDBC
