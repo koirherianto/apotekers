@@ -17,7 +17,7 @@
     <li>
       <strong>Clone the Repository</strong><br>
       Clone this repository to your local machine using the following command:<br>
-      <code>git clone https://github.com/username/my-netbeans-app.git</code>
+      <code>git clone https://github.com/koirherianto/apotekers.git </code>
     </li>
     <li>
       <strong>Open the Project in NetBeans</strong><br>
