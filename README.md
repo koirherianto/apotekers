@@ -62,7 +62,7 @@
 
   <h2>Contact</h2>
 
-  <p>For any questions or inquiries, please feel free to contact me at <a href="mailto:your.email@example.com">your.email@example.com</a>.</p>
+  <p>For any questions or inquiries, please feel free to contact me at <a href="mailto:koir.harianto.com">koir.harianto@gmail.com</a>.</p>
 
   <hr>
 
